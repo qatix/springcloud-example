@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: gw-zuul
+
+server:
+  port: 7301
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka
+
+zuul:
+  prefix: /gw
+  routes:
+    app1 :
+      path: /app1/**
+      serviceId: app1
+    app2:
+      path: /app2/**
+      serviceId: APP2
+    app3:
+      path: /app3/**
+      serviceId: app3
+  strip-prefix: true
+
+
+

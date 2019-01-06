@@ -1,0 +1,67 @@
+spring:
+  application:
+    name: gw
+  cloud:
+    consul:
+      discovery:
+        enabled: true
+        tags: version=1.2,name=springcloudtest
+        instance-id: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+        prefer-ip-address: true
+        health-check-interval: 30s
+      host: 192.168.199.231
+      port: 8500
+    gateway:
+      enabled: true
+      discovery:
+        locator:
+          enabled: true
+      routes:
+      - id: app1_route
+        uri: lb://app1
+        predicates:
+        - Path=/b1/**
+        filters:
+        - name: RequestRateLimiter
+          args:
+            redis-rate-limiter.replenishRate: 1
+            redis-rate-limiter.burstCapacity: 3
+            key-resolver: "#{@remoteAddrKeyResolver}" #SPEL表达式去的对应的bean
+#            rate-limiter: "#{@myRateLimiter}"
+        - StripPrefix=1
+        - SetResponseHeader=X-Response-Foo, B1Route
+        - name: Retry
+          args:
+            retries: 3
+            statuses: BAD_GATEWAY
+      - id: prefixpath_route
+        uri: http://app3.myhost.org
+        predicates:
+        - Path=/r1/**
+        filters:
+        - RedirectTo=302, http://baidu.com
+      - id: app2_route
+        uri: lb://app2
+        predicates:
+        - Path=/aa2/**
+        filters:
+        - SaveSession
+        - StripPrefix=1
+        - RewritePath=/foo/(?<segment>.*), /$\{segment} #For a request path of /foo/bar, this will set the path to /bar
+        #rewrite http://localhost:7310/aa2/foo/user/list -> http://localhost:7202/user/list
+      - id: setpath_route
+        uri: lb://app1
+        predicates:
+        - Path=/setpath/{segment} #只支持/setpath/abc -> /abc
+        filters:
+        - SetPath=/{segment}
+logging:
+  level:
+    org.springframework.cloud.gateway: trace
+    org.springframework.http.server.reactive: debug
+    org.springframework.web.reactive: debug
+    reactor.ipc.netty: debug
+
+server:
+  port: 7310
+

@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: app3
+
+server:
+  port: 7203
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka

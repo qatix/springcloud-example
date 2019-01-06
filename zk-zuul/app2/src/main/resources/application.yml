@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: app2
+  cloud:
+    zookeeper:
+      discovery:
+        root: /spring-cloud-services
+      connect-string: localhost:2181
+
+server:
+  port: 7202
+

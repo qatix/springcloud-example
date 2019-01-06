@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: gw-zuul
+  cloud:
+    consul:
+      discovery:
+        enabled: true
+        tags: version=1.2,name=springcloudtest
+        instance-id: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+        prefer-ip-address: true
+      host: 192.168.199.231
+      port: 8500
+
+
+server:
+  port: 7301
+
+
+zuul:
+  prefix: /gw
+  routes:
+    app1 :
+      path: /app1/**
+      serviceId: app1
+    app2:
+      path: /app2/**
+      serviceId: APP2
+    app3:
+      path: /app3/**
+      serviceId: app3
+  strip-prefix: true
+
+
+

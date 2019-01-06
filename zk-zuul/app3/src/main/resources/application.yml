@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: app3
+  cloud:
+    zookeeper:
+      discovery:
+        root: /spring-cloud-services
+      connect-string: localhost:2181
+      dependencies:
+        app1:
+          required: true
+          path: app1
+          loadBalancerType: ROUND_ROBIN
+
+
+server:
+  port: 7203
