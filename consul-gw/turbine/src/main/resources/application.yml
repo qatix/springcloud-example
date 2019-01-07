@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: hystrix-dashboard-turbine
+  cloud:
+      consul:
+        discovery:
+          enabled: true
+          tags: version=1.2,name=springcloudtest
+          instance-id: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+          prefer-ip-address: true
+        host: 192.168.199.231
+        port: 8500
+
+server:
+  port: 7601
+
+turbine:
+  app-config: app1,app2,app3,gw
+  aggregator:
+    cluster-config: default
+  cluster-name-expression: new String("default")

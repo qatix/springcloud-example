@@ -1,0 +1,26 @@
+
+spring:
+  application:
+    name: cfgserver
+  cloud:
+    consul:
+          discovery:
+            enabled: true
+            tags: version=1.2,name=cfgserver
+            instance-id: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+            prefer-ip-address: true
+          host: 192.168.199.231
+          port: 8500
+    config:
+      server:
+        git:
+          uri: https://github.com/qatix/springcloud-example.git
+          search-paths: config-repo  # git仓库地址下的相对地址，可以配置多个，用,分割。
+          username:
+          password:
+
+
+server:
+  port: 8811
+
+

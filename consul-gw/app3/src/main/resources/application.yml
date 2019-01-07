@@ -11,11 +11,18 @@ spring:
       host: 192.168.199.231
       port: 8500
 
-
-
 server:
   port: 7203
 
 feign:
   hystrix:
     enabled: true
+
+management:
+  endpoints:
+    jmx:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always

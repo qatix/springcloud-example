@@ -55,6 +55,11 @@ spring:
         - Path=/setpath/{segment} #只支持/setpath/abc -> /abc
         filters:
         - SetPath=/{segment}
+#      - id: websocket_test #websocket
+#        uri: ws://localhost:9000
+#        order: 9000
+#        predicates:
+#        - Path=/echo
 logging:
   level:
     org.springframework.cloud.gateway: trace
