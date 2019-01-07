@@ -19,10 +19,10 @@ feign:
     enabled: true
 
 management:
-  endpoints:
-    jmx:
-      exposure:
-        include: "*"
   endpoint:
     health:
       show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"

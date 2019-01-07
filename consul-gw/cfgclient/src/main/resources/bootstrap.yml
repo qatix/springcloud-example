@@ -1,7 +1,27 @@
 spring:
   cloud:
+    consul: #必须放在bootstrap.yml
+      discovery:
+        enabled: true
+        tags: version=1.2,name=cfgclient
+        instance-id: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+        prefer-ip-address: true
+      host: 192.168.199.231
+      port: 8500
     config:
-      name: oppo-config
+      name: qatix-config
       label: master
-      uri: http://localhost:8811
       profile: dev
+      discovery:
+        service-id: cfgserver
+        enabled: true
+  application: #必须放在bootstrap.yml
+    name: cfgclient
+
+#spring: #single server
+#  cloud:
+#    config:
+#      name: qatix-config
+#      label: master
+#      uri: http://localhost:8811
+#      profile: dev

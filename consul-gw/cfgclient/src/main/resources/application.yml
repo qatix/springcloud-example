@@ -1,17 +1,5 @@
 server:
   port: 7401
-spring:
-  application:
-    name: cfgclient
-  cloud:
-      consul:
-        discovery:
-          enabled: true
-          tags: version=1.2,name=springcloudtest
-          instance-id: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
-          prefer-ip-address: true
-        host: 192.168.199.231
-        port: 8500
 
 qatix:
   hello: default-val
