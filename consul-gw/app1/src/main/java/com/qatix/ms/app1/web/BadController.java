@@ -1,4 +1,4 @@
-package com.qatix.ms.app1;
+package com.qatix.ms.app1.web;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;

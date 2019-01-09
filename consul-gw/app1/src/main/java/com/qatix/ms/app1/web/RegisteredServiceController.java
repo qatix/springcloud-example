@@ -1,4 +1,4 @@
-package com.qatix.ms.app1;
+package com.qatix.ms.app1.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
